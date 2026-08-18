@@ -77,5 +77,3 @@ regression_performance.csv
 classification_performance.csv
 clustering_performance.csv
 
-# Project-specific generated plots (visualizations)
-*.png
