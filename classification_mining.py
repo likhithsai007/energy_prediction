@@ -27,6 +27,9 @@ def perform_classification():
     print("STEP 3: CLASSIFICATION ANALYSIS & MODEL COMPARISONS")
     print("="*60)
     
+    import os
+    os.makedirs('plots', exist_ok=True)
+    
     train = pd.read_csv("training_cleaned.csv")
     test = pd.read_csv("testing_cleaned.csv")
     
@@ -76,9 +79,9 @@ def perform_classification():
     plt.title("KNN Classifier Hyperparameter Tuning", fontweight='bold')
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.tight_layout()
-    plt.savefig('knn_classification_tuning.png', bbox_inches='tight')
+    plt.savefig('plots/knn_classification_tuning.png', bbox_inches='tight')
     plt.close()
-    print("  Saved 'knn_classification_tuning.png'")
+    print("  Saved 'plots/knn_classification_tuning.png'")
     
     # ---- 3. Decision Tree Classifier ----
     print("Tuning Decision Tree Classifier...")
@@ -169,9 +172,9 @@ def perform_classification():
         fig_cm.delaxes(axes_flat[j])
     
     fig_cm.tight_layout()
-    fig_cm.savefig('confusion_matrices_panel.png', bbox_inches='tight')
+    fig_cm.savefig('plots/confusion_matrices_panel.png', bbox_inches='tight')
     plt.close(fig_cm)
-    print("Saved 'confusion_matrices_panel.png'")
+    print("Saved 'plots/confusion_matrices_panel.png'")
     
     # Finalize ROC plot
     ax_roc.plot([0, 1], [0, 1], 'k--', alpha=0.5)
@@ -182,9 +185,9 @@ def perform_classification():
     ax_roc.legend(loc="lower right")
     ax_roc.grid(True, linestyle='--', alpha=0.3)
     fig_roc.tight_layout()
-    fig_roc.savefig('classification_roc_curves.png', bbox_inches='tight')
+    fig_roc.savefig('plots/classification_roc_curves.png', bbox_inches='tight')
     plt.close(fig_roc)
-    print("Saved 'classification_roc_curves.png'")
+    print("Saved 'plots/classification_roc_curves.png'")
     
     perf_df = pd.DataFrame(perf_results)
     print("\n--- Classification Performance ---")
@@ -216,9 +219,9 @@ def perform_classification():
     ax.set_title('SVM Decision Boundary & Support Vectors (2D PCA)', fontweight='bold')
     ax.legend(); ax.grid(True, alpha=0.2)
     plt.tight_layout()
-    plt.savefig('svm_decision_boundary.png', bbox_inches='tight')
+    plt.savefig('plots/svm_decision_boundary.png', bbox_inches='tight')
     plt.close()
-    print("Saved 'svm_decision_boundary.png'")
+    print("Saved 'plots/svm_decision_boundary.png'")
     print("="*60 + "\n")
     return perf_df
 

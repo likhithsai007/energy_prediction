@@ -16,6 +16,9 @@ def perform_clustering():
     print("STEP 4: CLUSTERING ANALYSIS (UNSUPERVISED SEGMENTATION)")
     print("="*60)
     
+    import os
+    os.makedirs('plots', exist_ok=True)
+    
     # Load cleaned data
     train = pd.read_csv("training_cleaned.csv")
     
@@ -71,9 +74,9 @@ def perform_clustering():
     ax2.grid(True, linestyle='--', alpha=0.5)
     
     plt.tight_layout()
-    plt.savefig('kmeans_optimal_clusters.png', bbox_inches='tight')
+    plt.savefig('plots/kmeans_optimal_clusters.png', bbox_inches='tight')
     plt.close()
-    print("Saved 'kmeans_optimal_clusters.png'")
+    print("Saved 'plots/kmeans_optimal_clusters.png'")
     
     # Select optimal clusters (let's use 3 clusters for final segmentation based on house levels / environmental ranges)
     optimal_k = 3
@@ -94,9 +97,9 @@ def perform_clustering():
     plt.xlabel("Sample Index", fontsize=12)
     plt.ylabel("Ward Distance", fontsize=12)
     plt.tight_layout()
-    plt.savefig('hierarchical_dendrogram.png', bbox_inches='tight')
+    plt.savefig('plots/hierarchical_dendrogram.png', bbox_inches='tight')
     plt.close()
-    print("Saved 'hierarchical_dendrogram.png'")
+    print("Saved 'plots/hierarchical_dendrogram.png'")
     
     # Fit Agglomerative Clustering on the full dataset (using 3 clusters for direct comparison)
     print(f"Fitting Agglomerative Clustering with 3 clusters...")
@@ -127,9 +130,9 @@ def perform_clustering():
     plt.legend()
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.tight_layout()
-    plt.savefig('gmm_bic_aic_tuning.png', bbox_inches='tight')
+    plt.savefig('plots/gmm_bic_aic_tuning.png', bbox_inches='tight')
     plt.close()
-    print("Saved 'gmm_bic_aic_tuning.png'")
+    print("Saved 'plots/gmm_bic_aic_tuning.png'")
     
     # Fit GMM with 3 components (for direct comparison)
     print("Fitting GMM with 3 components...")
@@ -176,9 +179,9 @@ def perform_clustering():
     ax2.set_ylabel("PCA Component 2")
     
     plt.tight_layout()
-    plt.savefig('clustering_comparison_scatter.png', bbox_inches='tight')
+    plt.savefig('plots/clustering_comparison_scatter.png', bbox_inches='tight')
     plt.close()
-    print("Saved 'clustering_comparison_scatter.png'")
+    print("Saved 'plots/clustering_comparison_scatter.png'")
     print("="*60 + "\n")
     return perf_df
 

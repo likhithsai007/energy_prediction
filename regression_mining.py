@@ -20,6 +20,9 @@ def perform_regression():
     print("STEP 2: REGRESSION ANALYSIS & OPTIMIZATION")
     print("="*60)
     
+    import os
+    os.makedirs('plots', exist_ok=True)
+    
     train = pd.read_csv("training_cleaned.csv")
     test = pd.read_csv("testing_cleaned.csv")
     
@@ -82,9 +85,9 @@ def perform_regression():
     plt.title("KNN Regressor Hyperparameter Tuning", fontweight='bold')
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.tight_layout()
-    plt.savefig('knn_regression_tuning.png', bbox_inches='tight')
+    plt.savefig('plots/knn_regression_tuning.png', bbox_inches='tight')
     plt.close()
-    print("  Saved 'knn_regression_tuning.png'")
+    print("  Saved 'plots/knn_regression_tuning.png'")
     
     # 4. Decision Tree Regressor with Tuning
     print("Tuning Decision Tree Regressor...")
@@ -126,9 +129,9 @@ def perform_regression():
         ax.set_title(f"{name}", fontweight='bold')
         ax.grid(True, linestyle='--', alpha=0.3)
     plt.tight_layout()
-    plt.savefig('regression_predictions_comparison.png', bbox_inches='tight')
+    plt.savefig('plots/regression_predictions_comparison.png', bbox_inches='tight')
     plt.close()
-    print("Saved 'regression_predictions_comparison.png'")
+    print("Saved 'plots/regression_predictions_comparison.png'")
     print("="*60 + "\n")
     return perf_df
 
