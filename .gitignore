@@ -67,13 +67,3 @@ venv.bak/
 *.swp
 *.swo
 
-# Project-specific generated datasets
-training_cleaned.csv
-testing_cleaned.csv
-descriptive_statistics.csv
-
-# Project-specific performance reports
-regression_performance.csv
-classification_performance.csv
-clustering_performance.csv
-

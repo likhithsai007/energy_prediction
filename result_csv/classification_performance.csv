@@ -1,0 +1,8 @@
+Model,                  Accuracy,       Precision,      Recall,     F1-score,       ROC-AUC
+Logistic Regression,    0.7864,         0.6562,         0.4014,     0.4981,         0.8252
+KNN Classifier,         0.7912,         0.6518,         0.4497,     0.5322,         0.8313
+Decision Tree,          0.8622,         0.7432,         0.7306,     0.7368,         0.9068
+Naive Bayes,            0.727,          0.482,          0.4513,     0.4661,         0.7674
+SVM Classifier,         0.7359,         0.0,            0.0,        0.0,            0.8101
+Perceptron,             0.272,          0.2661,         0.9992,     0.4203,         0.7293
+MLP Classifier,         0.7343,         0.0,            0.0,        0.0,            0.2957
