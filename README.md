@@ -1,118 +1,125 @@
-# Appliances Energy Prediction Pipeline
+# Smart Energy Consumption Forecasting ⚡
 
-An end-to-end data mining and machine learning pipeline applied to smart home telemetry to predict and analyze residential energy consumption patterns.
-
-This repository hosts data and Python modules associated with the publication:
-> Luis M. Candanedo, Véronique Feldheim, Dominique Deramaix. **"Data driven prediction models of energy use of appliances in a low-energy house."** *Energy and Buildings*, Volume 140, April 2017, Pages 81-97. 
-> [DOI: 10.1016/j.enbuild.2017.01.083](http://dx.doi.org/10.1016/j.enbuild.2017.01.083).
+A clean, full-stack Machine Learning web application designed to forecast household electricity consumption, identify peak demand periods, analyze energy patterns with K-Means clustering, provide smart load-shifting recommendations, and compare regression model performance.
 
 ---
 
-## 📂 Project Structure
+## 🏗️ Architecture & Technology Stack
 
-```bash
-├── energydata_complete.csv      # Raw telemetry data (temperatures, humidities, energy consumption)
-├── variables description.txt    # Explanation of all sensor variables and column units
-├── requirements.txt            # Package dependencies
-├── preprocessing.py            # Phase 1: Data cleansing, scaling, and partitioning
-├── regression_mining.py        # Phase 2: Continuous energy usage prediction
-├── classification_mining.py    # Phase 3: Peak energy consumption event classification
-├── clustering_mining.py        # Phase 4: Unsupervised indoor environmental profiling
-├── run_data_mining.py          # Orchestration pipeline runner
-├── data_mining_notebook.ipynb  # Interactive Jupyter notebook demonstration
-├── explained.md                # Detailed step-by-step code walkthrough and performance breakdown
-├── setup.md                    # Environment preparation and setup instructions
-└── guide.md                    # Detailed runtime instructions and parameter options
+- **Frontend**: React 18, Vite, Recharts, Lucide Icons, Modern Vanilla CSS Design System.
+- **Backend**: Python 3.11+, FastAPI, Uvicorn, scikit-learn, pandas, NumPy, joblib.
+- **Dataset**: UCI Appliances Energy Prediction Dataset (`energydata_complete.csv`).
+
+---
+
+## 📁 Project Structure
+
+```text
+.
+├── frontend/
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Forecast.jsx
+│   │   │   └── ModelAnalysis.jsx
+│   │   ├── components/
+│   │   │   ├── ForecastCard.jsx
+│   │   │   ├── PeakCard.jsx
+│   │   │   ├── ConsumptionChart.jsx
+│   │   │   └── ModelTable.jsx
+│   │   ├── services/
+│   │   │   └── api.js
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── package.json
+│   ├── vite.config.js
+│   └── index.html
+│
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── routes/
+│   │   │   ├── forecast.py
+│   │   │   └── models.py
+│   │   ├── services/
+│   │   │   ├── forecasting.py
+│   │   │   ├── model_selection.py
+│   │   │   └── recommendations.py
+│   │   └── models/
+│   │       ├── train.py
+│   │       └── trained_models/
+│   │           ├── linear_regression.joblib
+│   │           ├── decision_tree.joblib
+│   │           ├── random_forest.joblib
+│   │           ├── kmeans.joblib
+│   │           ├── scaler.joblib
+│   │           └── model_metadata.json
+│   ├── data/
+│   │   └── energydata_complete.csv
+│   └── requirements.txt
+│
+├── energydata_complete.csv
+└── README.md
 ```
 
 ---
 
-## ⚡ Quick Start
+## 🚀 Quick Start Guide
 
-### 1. Installation
-Prepare a clean environment and install dependencies. See [setup.md](setup.md) for full instructions.
+### 1. Backend Setup & Startup
+
+From the project root:
+
 ```bash
-# Setup virtual environment and install packages
-python -m venv venv
-source venv/bin/activate       # (Windows: venv\Scripts\activate)
-pip install -r requirements.txt
+# Install Python dependencies
+pip install -r backend/requirements.txt
+
+# (Optional) Train models if not already pre-trained
+python backend/app/models/train.py
+
+# Start FastAPI server (runs at http://localhost:8000)
+cd backend
+uvicorn app.main:app --reload --port 8000
 ```
 
-### 2. Run the Pipeline
-Execute the full pipeline to run preprocessing, train regressors/classifiers, perform clustering segmentation, and output all tables and plots:
+### 2. Frontend Setup & Startup
+
+In a separate terminal window:
+
 ```bash
-python run_data_mining.py
+cd frontend
+
+# Install npm dependencies
+npm install
+
+# Launch Vite development server (runs at http://localhost:5173)
+npm run dev
 ```
-For detailed customization and instructions to run modules separately, refer to [guide.md](guide.md).
 
-For a detailed analysis of how every function works and the mathematical intuition behind it, refer to the [explained.md](explained.md) file.
-
----
-
-## 📊 Summary of Model Performance
-
-### A. Regression Metrics (Continuous Prediction)
-Predictions are made on the continuous `Appliances` consumption target (in Wh):
-
-| Model | RMSE (Wh) | MAE (Wh) | $R^2$ Score |
-| :--- | :---: | :---: | :---: |
-| **Simple Linear Regression ($T_{out}$ only)** | 98.90 | 59.34 | 0.0076 |
-| **Multiple Linear Regression (All features)** | **89.59** | **51.07** | **0.1856** |
-| **KNN Regressor ($K=19$)** | 92.37 | 50.79 | 0.1343 |
-| **Decision Tree Regressor** | 91.80 | 51.46 | 0.1450 |
-
-### B. Classification Metrics (Peak Load Event Prediction)
-Classifiers predict binary events where energy consumption exceeds 100 Wh (`High_Energy_Usage` $\ge 100$):
-
-| Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Logistic Regression** | 0.7864 | 0.6562 | 0.4014 | 0.4981 | 0.8252 |
-| **KNN Classifier** | 0.7912 | 0.6518 | 0.4497 | 0.5322 | 0.8313 |
-| **Decision Tree Classifier** | **0.8622** | **0.7432** | **0.7306** | **0.7368** | **0.9068** |
-| **Gaussian Naive Bayes** | 0.7270 | 0.4820 | 0.4513 | 0.4661 | 0.7674 |
-
-### C. Unsupervised Clustering Metrics
-Segments the 18 indoor climate sensor attributes to identify typical environment configurations:
-
-| Algorithm | Silhouette Score | Davies-Bouldin Index |
-| :--- | :---: | :---: |
-| **K-Means Clustering ($K=3$)** | **0.2911** | **1.1763** |
-| **Hierarchical Agglomerative ($K=3$)** | 0.2556 | 1.3054 |
-| **GMM (EM Clustering) ($K=3$)** | 0.1757 | 1.5555 |
+Visit **`http://localhost:5173`** in your browser.
 
 ---
 
-## 🎨 Visualizing Pipeline Results
+## 🤖 Machine Learning Workflow
 
-The pipeline generates high-resolution figures reflecting model optimization and outcomes.
+1. **Supervised Regression**:
+   - **Linear Regression**: Baseline linear benchmark.
+   - **Decision Tree Regressor**: Tree-based non-linear model.
+   - **Random Forest Regressor**: Ensemble learning model achieving the highest R² score and lowest MAE/RMSE.
+   - *Model Selection*: The backend automatically identifies and deploys the highest-performing model.
 
-### 1. Regression Predictions & Fitting
-Comparison of predictions against actual values across the four regressor architectures:
-![Regression Predictions Comparison](./regression_predictions_comparison.png)
+2. **Unsupervised Pattern Analysis**:
+   - **K-Means Clustering ($k=3$)**: Segmenting usage profiles into **Low**, **Medium**, and **High Consumption** patterns evaluated via Silhouette Score.
 
-*KNN Regressor Neighbor (K) Optimization Curve:*
-![KNN Regression Tuning](./knn_regression_tuning.png)
-
----
-
-### 2. Classification ROC & Confusion Analysis
-*Receiver Operating Characteristic (ROC) profiles for all trained classification models:*
-![ROC-AUC Performance Curves](./classification_roc_curves.png)
-
-*Confusion matrices panel showcasing predicted vs actual categories:*
-![Confusion Matrices Panel](./confusion_matrices_panel.png)
-
-*Support Vector Machine (SVM) decision boundary plotted in 2D PCA space:*
-![SVM Decision Boundary](./svm_decision_boundary.png)
+3. **Smart Load Recommendation**:
+   - Recommends actionable load-shifting actions only when high consumption or peak intensity demands it.
 
 ---
 
-### 3. Unsupervised Environmental Segmentation
-*PCA-projected visual representations comparing K-Means ($K=3$) and Gaussian Mixture Model ($Components=3$) cluster assignments:*
-![KMeans vs GMM EM Clustering Scatter Comparison](./clustering_comparison_scatter.png)
+## 🔌 API Reference
 
-*Ward-linkage Dendrogram for sample clusters:*
-![Hierarchical Clustering Dendrogram](./hierarchical_dendrogram.png)
-
-*GMM AIC/BIC Component Tuning Curves:*
-![GMM AIC/BIC Components Tuning](./gmm_bic_aic_tuning.png)
+- `GET /api/health`: Health status check.
+- `POST /api/forecast`: Generates 10-minute continuous predictions, peak periods, total kWh, and recommendations.
+- `GET /api/models/performance`: Evaluation metrics (MAE, RMSE, R², MAPE) across models.
+- `GET /api/patterns`: K-Means cluster profiles and Silhouette Score.
+- `GET /api/models/feature-importance`: Top predictive features for the chosen model.

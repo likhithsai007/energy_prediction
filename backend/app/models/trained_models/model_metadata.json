@@ -1,0 +1,130 @@
+{
+  "feature_cols": [
+    "lights",
+    "T1",
+    "RH_1",
+    "T2",
+    "RH_2",
+    "T3",
+    "RH_3",
+    "T4",
+    "RH_4",
+    "T5",
+    "RH_5",
+    "T6",
+    "RH_6",
+    "T7",
+    "RH_7",
+    "T8",
+    "RH_8",
+    "T9",
+    "RH_9",
+    "T_out",
+    "Press_mm_hg",
+    "RH_out",
+    "Windspeed",
+    "Visibility",
+    "Tdewpoint",
+    "hour",
+    "day_of_week",
+    "is_weekend",
+    "NSM",
+    "month"
+  ],
+  "cluster_features": [
+    "Appliances",
+    "hour",
+    "NSM",
+    "T_out",
+    "RH_out",
+    "Windspeed"
+  ],
+  "models_performance": {
+    "Linear Regression": {
+      "mae": 52.61,
+      "rmse": 91.08,
+      "r2": 0.1711,
+      "mape": 62.95
+    },
+    "Decision Tree": {
+      "mae": 42.29,
+      "rmse": 86.93,
+      "r2": 0.2448,
+      "mape": 44.55
+    },
+    "Random Forest": {
+      "mae": 33.87,
+      "rmse": 69.02,
+      "r2": 0.5239,
+      "mape": 35.82
+    }
+  },
+  "selected_model": "Random Forest",
+  "selection_reason": "Selected automatically based on achieving the highest R\u00b2 score and lowest MAE/RMSE among all evaluated regression models.",
+  "kmeans_analysis": {
+    "n_clusters": 3,
+    "silhouette_score": 0.2888,
+    "clusters": [
+      {
+        "cluster_id": 1,
+        "label": "Low Consumption",
+        "avg_consumption_wh": 62.7,
+        "description": "Low Consumption pattern (average ~62.7 Wh)"
+      },
+      {
+        "cluster_id": 2,
+        "label": "Medium Consumption",
+        "avg_consumption_wh": 103.4,
+        "description": "Medium Consumption pattern (average ~103.4 Wh)"
+      },
+      {
+        "cluster_id": 0,
+        "label": "High Consumption",
+        "avg_consumption_wh": 148.0,
+        "description": "High Consumption pattern (average ~148.0 Wh)"
+      }
+    ]
+  },
+  "feature_importance": [
+    {
+      "feature": "NSM",
+      "importance": 0.1884
+    },
+    {
+      "feature": "T3",
+      "importance": 0.0629
+    },
+    {
+      "feature": "RH_3",
+      "importance": 0.0439
+    },
+    {
+      "feature": "RH_5",
+      "importance": 0.0387
+    },
+    {
+      "feature": "Press_mm_hg",
+      "importance": 0.0385
+    },
+    {
+      "feature": "T8",
+      "importance": 0.0378
+    },
+    {
+      "feature": "RH_2",
+      "importance": 0.0348
+    },
+    {
+      "feature": "RH_1",
+      "importance": 0.0326
+    },
+    {
+      "feature": "lights",
+      "importance": 0.0317
+    },
+    {
+      "feature": "RH_4",
+      "importance": 0.0309
+    }
+  ]
+}
